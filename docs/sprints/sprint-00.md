@@ -5,8 +5,8 @@ Dejar el proyecto, los entornos y el pipeline base listos para empezar el Sprint
 
 ## Tareas
 ### Repo y tablero
-- [ ] Crear repo público `probo-qa-lab` en GitHub y subir estos archivos
-- [ ] Crear tablero en GitHub Projects con columnas y etiquetas
+- [x] Crear repo público `probo-qa-lab` en GitHub y subir estos archivos
+- [x] Crear tablero en GitHub Projects con columnas y etiquetas ([Probo](https://github.com/users/fguzman01/projects/1))
 - [x] Crear carpetas: `docs/historias/`, `docs/testing/casos/`, `.claude/skills/`, `.claude/agents/`
 
 ### Decisiones

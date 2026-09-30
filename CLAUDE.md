@@ -58,7 +58,7 @@ Detalle en `docs/arquitectura/pipeline.md`.
 - CI/CD: GitHub Actions
 - Hosting: Railway (entornos **dev** y **prod**)
 - Reportes: GitHub Pages
-- Tablero: GitHub Projects
+- Tablero: GitHub Projects ([Probo](https://github.com/users/fguzman01/projects/1))
 
 ## Estado actual
 - **Sprint:** 0 (setup)
