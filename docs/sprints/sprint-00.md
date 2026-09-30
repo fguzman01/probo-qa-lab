@@ -1,0 +1,40 @@
+# Sprint 0 — Setup
+
+## Objetivo
+Dejar el proyecto, los entornos y el pipeline base listos para empezar el Sprint 1.
+
+## Tareas
+### Repo y tablero
+- [ ] Crear repo público `probo-qa-lab` en GitHub y subir estos archivos
+- [ ] Crear tablero en GitHub Projects con columnas y etiquetas
+- [x] Crear carpetas: `docs/historias/`, `docs/testing/casos/`, `.claude/skills/`, `.claude/agents/`
+
+### Decisiones
+- [x] Stack de la app (frontend, API, base de datos)
+
+### Entornos y pipeline
+- [ ] Crear proyecto en Railway con entornos dev y prod (con base de datos cada uno)
+- [ ] App "hola mundo" (front + API) desplegada en dev y prod
+- [ ] Estructura de tests (`core/`, `flows/`, `spec/`, `bdd/`) con un test dummy spec (UI y API) y un feature dummy BDD cuyo step llame a un flow
+- [ ] `ci.yml` y `deploy.yml` funcionando de punta a punta
+- [ ] Allure publicándose en GitHub Pages
+- [ ] Aprobación manual antes de prod configurada
+
+### Producto
+- [ ] Definir épicas del MVP
+- [ ] Escribir HUs del Sprint 1 y dejarlas en `Ready`
+- [ ] Actualizar "Estado actual" en `CLAUDE.md`
+
+## Decisiones tomadas
+- Suite spec como principal; BDD como pista de aprendizaje (1-2 HUs por sprint), con steps que reutilizan flows. Ver `pipeline.md`.
+- **Todo AI-First, incluido el desarrollo:** Claude escribe la app, los tests unitarios y los tests Playwright; Felipe gestiona y revisa (casos, tests, PRs) y aprueba.
+- **Stack:** React + Vite + TS (front), Node + Fastify + TS (API, JWT), Postgres + Prisma.
+- **Monorepo público:** `apps/web`, `apps/api`, `tests/`, `docs/`, `.claude/`. Público para usar GitHub Pages gratis y como portfolio.
+- **IA fake en tests:** `AI_PROVIDER=fake|claude`.
+- **Datos de prueba:** usuarios por seed; datos de negocio creados y eliminados por cada test vía API.
+- **Railway:** se usa la cuenta existente (USD 20/mes). Monitorear consumo la primera semana.
+
+## Retro
+- Qué funcionó:
+- Qué mejorar:
+- Qué cambio para el próximo sprint:
