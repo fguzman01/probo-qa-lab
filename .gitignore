@@ -10,3 +10,4 @@ test-results/
 playwright-report/
 .playwright-mcp/
 .features-gen/
+history.jsonl

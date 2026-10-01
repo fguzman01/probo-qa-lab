@@ -78,7 +78,7 @@ Tests spec                 Features Gherkin
             Data providers
 ```
 
-**Decisión tomada:** la suite spec es la principal y cubre toda la regresión. BDD es una pista de aprendizaje: se automatizan en Cucumber los criterios de aceptación de 1-2 HUs por sprint. Los steps no tocan selectores ni pages directamente; solo traducen Gherkin a llamadas a flows existentes.
+**Decisión tomada:** la suite spec es la principal y cubre toda la regresión. BDD es una pista de aprendizaje: se automatizan en Gherkin (con **playwright-bdd**, dentro del runner de Playwright) los criterios de aceptación de 1-2 HUs por sprint. Los steps no tocan selectores ni pages directamente; solo traducen Gherkin a llamadas a flows existentes.
 
 **Por qué:** el valor real de BDD es la colaboración con negocio y la documentación viva. En este proyecto (una persona) el valor es aprender, así que duplicar toda la suite sería puro costo de mantenimiento.
 
@@ -86,3 +86,8 @@ Tests spec                 Features Gherkin
 - Ambas suites corren contra dev en cada deploy.
 - Los resultados de ambas van al mismo reporte Allure.
 - Smoke en prod: subconjunto de la suite spec.
+
+## Implementación
+- **Reporte:** Allure 3 (`allure` npm, sin Java). El historial (`history.jsonl`) se guarda en la rama `gh-pages` y se recupera en cada corrida.
+- **Deploy:** `railway up` por servicio (`apps/api`, `apps/web`) con el `RAILWAY_TOKEN` del environment de GitHub correspondiente.
+- **Smoke en prod:** usa las variables de repo `PROD_WEB_URL` y `PROD_API_URL` y corre los tests `@smoke`.

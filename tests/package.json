@@ -10,7 +10,7 @@
     "test:bdd": "bddgen && playwright test --project=bdd",
     "test:smoke": "bddgen && playwright test --grep @smoke",
     "typecheck": "tsc --noEmit",
-    "report": "allure generate allure-results -o allure-report"
+    "report": "allure generate allure-results"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",

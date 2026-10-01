@@ -31,7 +31,7 @@ Felipe es el **PO y el QA gestor/revisor de agentes**, con experticia en **QA Au
 ## Automatización
 - **Playwright + TypeScript**, patrón **POM** y **Data Provider Model**.
 - **Suite principal (spec):** pages → flows → tests. Cubre toda la regresión de UI y API.
-- **Pista BDD (aprendizaje):** Cucumber con Gherkin para **1-2 HUs por sprint**. Los steps **reutilizan los flows** de la suite principal; solo se agregan features y steps encima.
+- **Pista BDD (aprendizaje):** Gherkin en español con **playwright-bdd** (mismo runner, fixtures y reporter que spec) para **1-2 HUs por sprint**. Los steps **reutilizan los flows** de la suite principal; solo se agregan features y steps encima.
 - Ambas comparten `tests/core/` (pages, clientes API, data providers) y `tests/flows/`.
 - Cobertura de **front (UI)** y **API**.
 - Reportes con **Allure**.
@@ -54,7 +54,7 @@ Detalle en `docs/arquitectura/pipeline.md`.
 - API: Node + Fastify + TypeScript, login con JWT
 - Base de datos: Postgres + Prisma (migraciones y seed)
 - Tests unitarios: los escribe Claude junto con el código de la app
-- Tests: Playwright + TypeScript, Cucumber, Allure
+- Tests: Playwright + TypeScript, playwright-bdd, Allure 3
 - CI/CD: GitHub Actions
 - Hosting: Railway (entornos **dev** y **prod**)
 - Reportes: GitHub Pages

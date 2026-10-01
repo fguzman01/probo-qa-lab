@@ -40,7 +40,7 @@ Etiquetas: `epica`, `historia`, `bug`, `tarea-tecnica`, `automatizacion`, `bdd`,
 - Desplegado en dev
 - Casos diseñados y ejecutados
 - Casos priorizados automatizados (UI y/o API) en la suite spec
-- Si la HU tiene etiqueta `bdd`: criterios de aceptación automatizados en Cucumber
+- Si la HU tiene etiqueta `bdd`: criterios de aceptación automatizados en Gherkin (playwright-bdd)
 - Pipeline verde y reporte Allure publicado
 - Sin bugs críticos o altos abiertos
 - Aprobado y desplegado en prod, smoke OK

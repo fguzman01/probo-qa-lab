@@ -1,0 +1,164 @@
+name: Deploy
+
+# Regla de oro: dev → tests UI + API → Allure publicado → aprobación de Felipe → prod → smoke
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Nunca dos deploys en paralelo; el que llega espera.
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: write # publicar Allure en la rama gh-pages
+
+env:
+  NODE_VERSION: 22
+
+jobs:
+  deploy-dev:
+    name: Deploy a DEV
+    runs-on: ubuntu-latest
+    environment: dev
+    env:
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - run: npm i -g @railway/cli
+      - name: Deploy API
+        run: railway up apps/api --path-as-root --service api --environment dev --ci
+      - name: Deploy Web
+        run: railway up apps/web --path-as-root --service web --environment dev --ci
+      - name: Esperar que la API responda
+        run: |
+          for i in $(seq 1 30); do
+            if curl -sf https://api-dev-12f8.up.railway.app/api/health; then exit 0; fi
+            sleep 10
+          done
+          echo "La API de dev no respondió a tiempo" && exit 1
+
+  test-dev:
+    name: Tests UI + API contra DEV
+    needs: deploy-dev
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tests
+    env:
+      TEST_ENV: dev
+      CI: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: tests/package-lock.json
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Correr spec + BDD
+        run: npm test
+      - name: Guardar resultados Allure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-dev
+          path: tests/allure-results
+          retention-days: 14
+
+  report:
+    name: Publicar Allure en GitHub Pages
+    needs: test-dev
+    if: always() && needs.test-dev.result != 'skipped'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tests
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: tests/package-lock.json
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          name: allure-results-dev
+          path: tests/allure-results
+      - name: Recuperar historial del reporte anterior
+        run: |
+          git fetch origin gh-pages --depth=1 && git show origin/gh-pages:history.jsonl > history.jsonl \
+            || echo "Sin historial previo (primer reporte)"
+      - name: Generar reporte
+        run: |
+          npm run report
+          cp history.jsonl allure-report/ 2>/dev/null || true
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: tests/allure-report
+          commit_message: "report: Allure ${{ github.sha }}"
+
+  deploy-prod:
+    name: Deploy a PROD (requiere aprobación)
+    needs: [test-dev, report]
+    # Solo si los tests de dev pasaron: si fallan, no se ofrece la aprobación.
+    if: needs.test-dev.result == 'success' && needs.report.result == 'success'
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - run: npm i -g @railway/cli
+      - name: Deploy API
+        run: railway up apps/api --path-as-root --service api --environment production --ci
+      - name: Deploy Web
+        run: railway up apps/web --path-as-root --service web --environment production --ci
+
+  smoke-prod:
+    name: Smoke en PROD
+    needs: deploy-prod
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tests
+    env:
+      TEST_ENV: prod
+      PROBO_WEB_URL: ${{ vars.PROD_WEB_URL }}
+      PROBO_API_URL: ${{ vars.PROD_API_URL }}
+      CI: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: tests/package-lock.json
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Esperar que la API de prod responda
+        run: |
+          for i in $(seq 1 30); do
+            if curl -sf "$PROBO_API_URL/api/health"; then exit 0; fi
+            sleep 10
+          done
+          echo "La API de prod no respondió a tiempo" && exit 1
+      - name: Correr smoke
+        run: npm run test:smoke
+      - name: Guardar resultados Allure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-prod-smoke
+          path: tests/allure-results
+          retention-days: 14
