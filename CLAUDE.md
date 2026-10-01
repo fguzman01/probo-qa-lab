@@ -36,7 +36,7 @@ Felipe es el **PO y el QA gestor/revisor de agentes**, con experticia en **QA Au
 - Cobertura de **front (UI)** y **API**.
 - Reportes con **Allure**.
 - **Datos de prueba:** usuarios de login precreados por seed en cada entorno; los datos de negocio los crea cada test por API al inicio y los elimina al final (fixtures de Playwright).
-- **IA en tests:** la API tiene `AI_PROVIDER=fake|claude`. En tests se usa `fake` (respuestas fijas y predecibles).
+- **IA en tests:** la API tiene `AI_PROVIDER=fake|groq|claude`. En tests se usa `fake` (respuestas fijas y predecibles); el MVP usa `groq` (free tier, sin gasto); `claude` queda para la etapa producto con la key del cliente.
 
 ## Regla de oro del pipeline
 Ningún desarrollo llega a prod sin este orden:

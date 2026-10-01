@@ -11,7 +11,7 @@
 ## Tablero (GitHub Projects)
 Columnas: `Backlog` → `Ready` → `In Progress` → `In QA` → `Done`
 
-Etiquetas: `historia`, `bug`, `tarea-tecnica`, `automatizacion`, `bdd`, `sistema-qa`, `prioridad-alta`, `prioridad-media`, `prioridad-baja`
+Etiquetas: `epica`, `historia`, `bug`, `tarea-tecnica`, `automatizacion`, `bdd`, `sistema-qa`, `prioridad-alta`, `prioridad-media`, `prioridad-baja`
 
 ## Ciclo del sprint
 

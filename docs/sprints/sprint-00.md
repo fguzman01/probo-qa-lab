@@ -30,7 +30,7 @@ Dejar el proyecto, los entornos y el pipeline base listos para empezar el Sprint
 - **Todo AI-First, incluido el desarrollo:** Claude escribe la app, los tests unitarios y los tests Playwright; Felipe gestiona y revisa (casos, tests, PRs) y aprueba.
 - **Stack:** React + Vite + TS (front), Node + Fastify + TS (API, JWT), Postgres + Prisma.
 - **Monorepo público:** `apps/web`, `apps/api`, `tests/`, `docs/`, `.claude/`. Público para usar GitHub Pages gratis y como portfolio.
-- **IA fake en tests:** `AI_PROVIDER=fake|claude`.
+- **IA sin costo:** `AI_PROVIDER=fake|groq|claude`. Tests con `fake`, MVP con `groq` (free tier), `claude` solo en etapa producto con la key del cliente.
 - **Datos de prueba:** usuarios por seed; datos de negocio creados y eliminados por cada test vía API.
 - **Railway:** se usa la cuenta existente (USD 20/mes). Monitorear consumo la primera semana.
 

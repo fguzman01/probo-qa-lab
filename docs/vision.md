@@ -23,7 +23,7 @@ Construir Probo como una app web con:
 - **API REST** separada (para tests de API)
 - **Base de datos** (Postgres en Railway)
 - **Login simple** (un usuario en el MVP)
-- **Integración con la API de Claude** para generar casos
+- **Generación de casos con IA** vía un proveedor intercambiable (`AI_PROVIDER`), **sin costo** en el MVP
 
 Desplegada en **Railway** con entornos **dev** y **prod**, cada uno con su propia base de datos. TypeScript de punta a punta, para mantener un solo lenguaje con Playwright:
 - Front: React + Vite
@@ -31,7 +31,12 @@ Desplegada en **Railway** con entornos **dev** y **prod**, cada uno con su propi
 - DB: Postgres + Prisma
 - Monorepo público (app, tests, docs y agentes juntos)
 
-La integración con Claude se puede cambiar por un **proveedor fake** (`AI_PROVIDER=fake`) para que los tests sean determinísticos.
+Proveedores de IA (`AI_PROVIDER`):
+- `fake`: respuestas fijas, para que los tests sean determinísticos.
+- `groq`: **proveedor del MVP**, free tier sin tarjeta (modelos abiertos, API compatible con OpenAI). Alternativa: `gemini` (ojo: en su free tier los prompts se usan para entrenar).
+- `claude`: etapa producto, con la **API key del cliente** (el costo lo asume quien usa Probo).
+
+Restricción: el MVP **no genera gasto** en APIs de IA.
 
 ## Alcance del MVP de Probo
 **Dentro:**

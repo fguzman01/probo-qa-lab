@@ -44,7 +44,7 @@ Por qué monorepo: los agentes leen HU, código y tests en un solo lugar; un PR 
 ## Datos de prueba
 - **Usuarios de login:** precreados con seed de Prisma. Dev tiene usuario de tests; prod tiene un usuario de smoke aparte.
 - **Datos de negocio:** cada test los crea por API al inicio y los elimina al final (fixtures de Playwright). Ningún test depende de datos preexistentes.
-- **IA:** en dev los tests corren con `AI_PROVIDER=fake`. A futuro, un test de contrato aparte contra Claude real que valide solo la estructura.
+- **IA:** en dev los tests corren con `AI_PROVIDER=fake`. A futuro, un test de contrato aparte contra el proveedor real (Groq) que valide solo la estructura, cuidando el límite del free tier.
 - **Secretos:** en GitHub Secrets y variables de Railway, nunca en el repo ni en los reportes (el repo y Allure son públicos).
 
 ## Estructura de tests
