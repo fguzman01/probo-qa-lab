@@ -13,12 +13,12 @@ Dejar el proyecto, los entornos y el pipeline base listos para empezar el Sprint
 - [x] Stack de la app (frontend, API, base de datos)
 
 ### Entornos y pipeline
-- [ ] Crear proyecto en Railway con entornos dev y prod (con base de datos cada uno)
+- [x] Crear proyecto en Railway con entornos dev y prod (con base de datos cada uno) — proyecto `probo`
 - [ ] App "hola mundo" (front + API) desplegada en dev y prod
 - [ ] Estructura de tests (`core/`, `flows/`, `spec/`, `bdd/`) con un test dummy spec (UI y API) y un feature dummy BDD cuyo step llame a un flow
 - [ ] `ci.yml` y `deploy.yml` funcionando de punta a punta
 - [ ] Allure publicándose en GitHub Pages
-- [ ] Aprobación manual antes de prod configurada
+- [ ] Aprobación manual antes de prod configurada (environment `production` en GitHub ya creado con Felipe como aprobador; falta usarlo en `deploy.yml`)
 
 ### Producto
 - [x] Definir épicas del MVP (issues #1-#6)
