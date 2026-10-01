@@ -21,7 +21,7 @@ Dejar el proyecto, los entornos y el pipeline base listos para empezar el Sprint
 - [ ] Aprobación manual antes de prod configurada
 
 ### Producto
-- [ ] Definir épicas del MVP
+- [x] Definir épicas del MVP (issues #1-#6)
 - [ ] Escribir HUs del Sprint 1 y dejarlas en `Ready`
 - [ ] Actualizar "Estado actual" en `CLAUDE.md`
 
