@@ -12,3 +12,4 @@ playwright-report/
 .features-gen/
 history.jsonl
 apps/api/src/generated/
+.playwright-cli/
