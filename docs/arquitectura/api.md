@@ -9,7 +9,7 @@
 
 ### Autenticación
 - `Authorization: Bearer <token>` en todos los endpoints salvo los marcados como **públicos**.
-- Token **JWT HS256**, expira a las **8 horas** (`exp`). Secreto en la variable `JWT_SECRET`, distinto por entorno.
+- Token **JWT HS256**, expira a las **8 horas absolutas** desde el login (`exp`; configurable con `JWT_TTL` para tests). Secreto en la variable `JWT_SECRET`, distinto por entorno.
 - Sin token, token alterado, mal formado o expirado → **401** `UNAUTHORIZED`.
 
 ### Formato de error
@@ -44,6 +44,9 @@
 | GET | `/api/auth/me` | sí | — | `200 { id, email }` · 401 |
 
 `/me` lo usa el front al recargar para saber si el token sigue vigente.
+
+- **Email:** se normaliza con `trim` + minúsculas antes de buscar; máximo 254 caracteres. **Contraseña:** sin `trim`.
+- Ante cualquier 401 de un endpoint autenticado, el front borra el token y redirige a `/login` con "Tu sesión expiró. Iniciá sesión de nuevo."
 
 ### Historias (HU-003, HU-004, HU-005)
 | Método | Ruta | Body | Respuesta |
