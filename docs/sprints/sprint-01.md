@@ -8,7 +8,7 @@ Que Probo permita **entrar, cargar una historia y obtener casos de prueba genera
 ## HUs comprometidas
 | HU | Título | Épica | Prioridad | Pts |
 |---|---|---|---|---|
-| [HU-001](../historias/HU-001.md) | Iniciar sesión | E1 | alta | 3 |
+| [HU-001](../historias/HU-001.md) | Iniciar sesión | E1 | alta | 5 |
 | [HU-002](../historias/HU-002.md) | Cerrar sesión y proteger el acceso | E1 | alta | 2 |
 | [HU-003](../historias/HU-003.md) | Crear una historia de usuario | E2 | alta | 3 |
 | [HU-004](../historias/HU-004.md) | Listar y ver el detalle de historias | E2 | alta | 2 |
@@ -16,7 +16,7 @@ Que Probo permita **entrar, cargar una historia y obtener casos de prueba genera
 | [HU-007](../historias/HU-007.md) | Aprobar o descartar casos | E4 | alta | 3 |
 | [HU-005](../historias/HU-005.md) | Editar una historia *(stretch)* | E2 | media | 2 |
 
-**Total:** 18 pts comprometidos + 2 pts stretch.
+**Total:** 20 pts comprometidos + 2 pts stretch (HU-001 subió de 3 a 5 tras el análisis del `qa-analista`).
 
 ## HUs en BDD (1-2)
 - **HU-001 Iniciar sesión:** flujo corto con casos positivos y negativos claros; buena para aprender.
@@ -43,6 +43,11 @@ Que Probo permita **entrar, cargar una historia y obtener casos de prueba genera
 6. HU-005 si sobra tiempo
 
 ## Notas del día a día
+- **2026-10-02 · HU-001 (desarrollo):** los tests unitarios encontraron 2 defectos antes del PR (no llegaron a dev):
+  - **Valor límite de expiración:** la librería JWT aceptaba el token en el segundo exacto de `exp` (8:00:00). RFC 7519 exige rechazarlo. Se agregó el chequeo explícito.
+  - **Validación duplicada:** un email vacío devolvía dos errores para el mismo campo ("Campo obligatorio" y "Email inválido"). Ahora se devuelve uno por campo.
+  - Lección para `disenador-casos`: en sesiones/tokens, probar **siempre** el instante exacto del límite, no solo antes y después.
+- **2026-10-02:** la página de estado del sistema pasó de `/` a `/estado` (pública); `/` redirige al login o a `/historias`.
 
 ## Resultados de pruebas (link a Allure)
 
