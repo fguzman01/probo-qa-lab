@@ -1,6 +1,6 @@
 # Generación de casos con IA
 
-> Estado: **propuesta** (pendiente de revisión de Felipe) · Sprint 1 · HU-006
+> Estado: **aprobado** por Felipe (2026-10-02) · Sprint 1 · HU-006
 > Restricción: **cero gasto** en APIs de IA en el MVP.
 
 ## Proveedores

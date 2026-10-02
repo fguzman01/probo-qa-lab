@@ -22,8 +22,8 @@ Dejar el proyecto, los entornos y el pipeline base listos para empezar el Sprint
 
 ### Producto
 - [x] Definir épicas del MVP (issues #1-#6)
-- [ ] Escribir HUs del Sprint 1 y dejarlas en `Ready`
-- [ ] Actualizar "Estado actual" en `CLAUDE.md`
+- [x] Escribir HUs del Sprint 1 y dejarlas en `Ready` (#14-#20, con diseño UI y técnico)
+- [x] Actualizar "Estado actual" en `CLAUDE.md`
 
 ## Decisiones tomadas
 - Suite spec como principal; BDD como pista de aprendizaje (1-2 HUs por sprint), con steps que reutilizan flows. Ver `pipeline.md`.
@@ -43,7 +43,23 @@ Dejar el proyecto, los entornos y el pipeline base listos para empezar el Sprint
 | dev | https://web-dev-467e.up.railway.app | https://api-dev-12f8.up.railway.app |
 | prod | https://web-production-1e8d7.up.railway.app | https://api-production-82b3.up.railway.app |
 
+## Uso de agentes (qué sirvió, qué corregí)
+Todavía no hay agentes propios; Claude (sesión principal) propuso épicas, HUs, diseño UI, diseño técnico, código y pipeline. Felipe validó: épicas (3 dudas de PO), supuestos de las HUs, runner BDD (playwright-bdd) y proveedor de IA sin costo (Groq).
+
 ## Retro
-- Qué funcionó:
-- Qué mejorar:
-- Qué cambio para el próximo sprint:
+> Borrador propuesto por Claude; Felipe lo corrige.
+
+- **Qué funcionó:**
+  - Pipeline completo (dev → tests → Allure → aprobación → prod → smoke) funcionando en 2 días.
+  - Decidir y documentar antes de codear: stack, monorepo, datos de prueba, IA sin costo.
+  - El ciclo "la IA propone, el QA decide" en épicas, HUs y diseño: Felipe revisó en vez de escribir desde cero.
+  - Diseñar UI y sistema antes de desarrollar: salieron decisiones (modal de regenerar, editar casos fuera) antes de escribir código.
+- **Qué mejorar:**
+  - Railway: los servicios no se crean solos en production y la CLI no puede instanciarlos; costó un deploy fallido.
+  - PRs en paralelo que tocan el mismo archivo (`.gitignore`) generaron conflictos.
+  - Setup local con fricción: `gh` fuera del PATH, puerto 3000 ocupado, dónde crear tokens de Railway.
+  - Seguridad: en una consulta de configuración quedó expuesta en la sesión la contraseña del Postgres de prod (sin acceso público). Rotarla antes de tener datos reales.
+- **Qué cambio para el próximo sprint:**
+  - Servicio nuevo en Railway: crearlo en dev y sincronizar a prod con checklist (Sync → `APP_ENV` → dominios → variables).
+  - Evitar PRs simultáneos que toquen los mismos archivos, o encadenarlos.
+  - Escribir `docs/setup.md` con el setup local (herramientas, puertos, variables).

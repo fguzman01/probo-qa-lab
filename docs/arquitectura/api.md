@@ -1,6 +1,6 @@
 # API REST
 
-> Estado: **propuesta** (pendiente de revisión de Felipe) · Sprint 1
+> Estado: **aprobado** por Felipe (2026-10-02) · Sprint 1
 
 ## Convenciones
 - Base: `/api`. JSON en request y response. Fechas en ISO 8601 (UTC).

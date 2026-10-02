@@ -61,14 +61,15 @@ Detalle en `docs/arquitectura/pipeline.md`.
 - Tablero: GitHub Projects ([Probo](https://github.com/users/fguzman01/projects/1))
 
 ## Estado actual
-- **Sprint:** 0 (setup)
-- **Siguiente paso:** ver `docs/sprints/sprint-00.md`
+- **Sprint:** 1 (desde 2026-10-02) · Sprint 0 cerrado
+- **Siguiente paso:** Prisma + migraciones + seed de usuarios, luego HU-001. Ver `docs/sprints/sprint-01.md`
 
 > Actualizar esta sección al cerrar cada sprint.
 
 ## Dónde está cada cosa
 - HUs: `docs/historias/HU-XXX.md` (el issue del tablero enlaza al archivo)
-- Diseños del sistema: `docs/arquitectura/`
+- Diseños del sistema: `docs/arquitectura/` (`modelo-datos.md`, `api.md`, `ia.md`, `pipeline.md`)
+- Diseño UI: [Probo UI](https://claude.ai/artifact/Pe7F1K5x7XrggbH8wmc8fJ) (artifact de diseño; cada HU enlaza su pantalla)
 - Casos de prueba: `docs/testing/casos/HU-XXX.md`
 - Historial de testing: `docs/sprints/sprint-XX.md` (resultados, bugs, retro)
 - Skills: `.claude/skills/<nombre>/SKILL.md`
