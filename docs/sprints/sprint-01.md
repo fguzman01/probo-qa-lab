@@ -8,7 +8,7 @@ Que Probo permita **entrar, cargar una historia y obtener casos de prueba genera
 ## HUs comprometidas
 | HU | Título | Épica | Prioridad | Pts |
 |---|---|---|---|---|
-| [HU-001](../historias/HU-001.md) | Iniciar sesión | E1 | alta | 3 |
+| [HU-001](../historias/HU-001.md) | Iniciar sesión | E1 | alta | 5 |
 | [HU-002](../historias/HU-002.md) | Cerrar sesión y proteger el acceso | E1 | alta | 2 |
 | [HU-003](../historias/HU-003.md) | Crear una historia de usuario | E2 | alta | 3 |
 | [HU-004](../historias/HU-004.md) | Listar y ver el detalle de historias | E2 | alta | 2 |
@@ -16,7 +16,7 @@ Que Probo permita **entrar, cargar una historia y obtener casos de prueba genera
 | [HU-007](../historias/HU-007.md) | Aprobar o descartar casos | E4 | alta | 3 |
 | [HU-005](../historias/HU-005.md) | Editar una historia *(stretch)* | E2 | media | 2 |
 
-**Total:** 18 pts comprometidos + 2 pts stretch.
+**Total:** 20 pts comprometidos + 2 pts stretch (HU-001 subió de 3 a 5 tras el análisis del `qa-analista`).
 
 ## HUs en BDD (1-2)
 - **HU-001 Iniciar sesión:** flujo corto con casos positivos y negativos claros; buena para aprender.
