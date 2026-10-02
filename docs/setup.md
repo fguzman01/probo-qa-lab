@@ -52,3 +52,10 @@ Secretos de GitHub (por environment): `RAILWAY_TOKEN`, `TEST_USER_PASSWORD`; var
 2. En la web: entorno **production** → **Sync** desde dev → revisar que solo agregue lo esperado.
 3. Corregir en prod: `APP_ENV`, dominios (`railway domain`) y variables que apunten a dominios.
 4. Tocar production requiere OK de Felipe.
+
+## Rotar la contraseña del Postgres (checklist)
+1. `railway connect Postgres -e <entorno> --tunnel-only -P 55432` (requiere clave SSH: `ssh-keygen -t ed25519`).
+2. `docker run -it --rm postgres:17 psql "postgresql://postgres:<ACTUAL>@host.docker.internal:55432/railway"` → `ALTER USER postgres WITH PASSWORD '<NUEVA>';`
+3. Railway → Postgres → Variables → `POSTGRES_PASSWORD` = nueva → Deploy.
+4. **Redeploy de la API** (`railway redeploy -s api -e <entorno>`): no toma la contraseña nueva sola.
+5. Verificar `/api/health` → `db: ok`.
