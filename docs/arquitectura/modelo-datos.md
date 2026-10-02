@@ -1,6 +1,6 @@
 # Modelo de datos
 
-> Estado: **propuesta** (pendiente de revisión de Felipe) · Sprint 1
+> Estado: **aprobado** por Felipe (2026-10-02) · Sprint 1
 > Postgres + Prisma. Nombres de tablas y campos en inglés; la UI en español.
 
 ## Diagrama
