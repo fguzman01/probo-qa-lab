@@ -1,0 +1,5 @@
+{
+  "name": "Probo",
+  "output": "./allure-report",
+  "historyPath": "./history.jsonl"
+}
