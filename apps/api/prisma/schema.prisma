@@ -1,0 +1,132 @@
+// Modelo de datos de Probo. Fuente: docs/arquitectura/modelo-datos.md
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  moduleFormat = "esm"
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String   @id @default(uuid()) @db.Uuid
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  stories      Story[]
+}
+
+model Story {
+  id        String   @id @default(uuid()) @db.Uuid
+  // El código HU-XXX se calcula a partir de number; nunca se reutiliza.
+  number    Int      @unique @default(autoincrement())
+  title     String   @db.VarChar(120)
+  asA       String   @db.VarChar(200)
+  iWant     String   @db.VarChar(500)
+  soThat    String   @db.VarChar(500)
+  ownerId   String   @db.Uuid
+  owner     User     @relation(fields: [ownerId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  criteria    AcceptanceCriterion[]
+  testCases   TestCase[]
+  generations AiGeneration[]
+}
+
+model AcceptanceCriterion {
+  id       String @id @default(uuid()) @db.Uuid
+  storyId  String @db.Uuid
+  story    Story  @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  // El código CA<position> se calcula a partir de position.
+  position Int
+  text     String @db.VarChar(500)
+
+  coverage TestCaseCoverage[]
+
+  @@unique([storyId, position])
+}
+
+enum TestTechnique {
+  HAPPY_PATH
+  EQUIVALENCE_PARTITION
+  BOUNDARY_VALUE
+  DECISION_TABLE
+  NEGATIVE
+  OTHER
+}
+
+enum TestPriority {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum TestCaseStatus {
+  PENDING
+  APPROVED
+  DISCARDED
+}
+
+enum TestCaseOrigin {
+  AI
+  MANUAL
+}
+
+model TestCase {
+  id             String         @id @default(uuid()) @db.Uuid
+  storyId        String         @db.Uuid
+  story          Story          @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  title          String         @db.VarChar(150)
+  preconditions  String         @default("")
+  steps          String[]
+  expectedResult String
+  technique      TestTechnique
+  priority       TestPriority
+  status         TestCaseStatus @default(PENDING)
+  origin         TestCaseOrigin
+  editedAt       DateTime?
+  generationId   String?        @db.Uuid
+  generation     AiGeneration?  @relation(fields: [generationId], references: [id], onDelete: SetNull)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  coverage TestCaseCoverage[]
+
+  @@index([storyId, status])
+}
+
+model TestCaseCoverage {
+  testCaseId  String              @db.Uuid
+  testCase    TestCase            @relation(fields: [testCaseId], references: [id], onDelete: Cascade)
+  criterionId String              @db.Uuid
+  criterion   AcceptanceCriterion @relation(fields: [criterionId], references: [id], onDelete: Cascade)
+
+  @@id([testCaseId, criterionId])
+}
+
+enum AiGenerationResult {
+  SUCCESS
+  PROVIDER_ERROR
+  RATE_LIMITED
+  INVALID_RESPONSE
+}
+
+model AiGeneration {
+  id             String             @id @default(uuid()) @db.Uuid
+  storyId        String             @db.Uuid
+  story          Story              @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  provider       String
+  model          String
+  promptVersion  String
+  result         AiGenerationResult
+  casesCreated   Int                @default(0)
+  casesReplaced  Int                @default(0)
+  durationMs     Int
+  createdAt      DateTime           @default(now())
+
+  testCases TestCase[]
+}
