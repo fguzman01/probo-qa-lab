@@ -35,6 +35,8 @@ Felipe es el **PO y el QA gestor/revisor de agentes**, con experticia en **QA Au
 - Ambas comparten `tests/core/` (pages, clientes API, data providers) y `tests/flows/`.
 - Cobertura de **front (UI)** y **API**.
 - Reportes con **Allure**.
+- **Exploración del browser:** `playwright-cli` por defecto (skill `.claude/skills/playwright-cli`, `npx playwright-cli` desde `tests/`): snapshots, `generate-locator` para los Page Objects, `requests`/`console`/`route` para explorar. El MCP de Playwright solo si la CLI no alcanza.
+- **Page Objects** en `tests/core/pages/` (compartidos por spec y BDD); clientes de API en `tests/core/api/`.
 - **Datos de prueba:** usuarios de login precreados por seed en cada entorno; los datos de negocio los crea cada test por API al inicio y los elimina al final (fixtures de Playwright).
 - **IA en tests:** la API tiene `AI_PROVIDER=fake|groq|claude`. En tests se usa `fake` (respuestas fijas y predecibles); el MVP usa `groq` (free tier, sin gasto); `claude` queda para la etapa producto con la key del cliente.
 

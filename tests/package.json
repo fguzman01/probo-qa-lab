@@ -13,6 +13,7 @@
     "report": "allure generate allure-results"
   },
   "devDependencies": {
+    "@playwright/cli": "^0.1.22",
     "@playwright/test": "^1.63.0",
     "@types/node": "^26.6.3",
     "allure": "^3.19.1",
