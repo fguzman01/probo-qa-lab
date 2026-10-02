@@ -9,8 +9,7 @@ export type Environment = {
 const environments: Record<EnvName, Omit<Environment, 'name'>> = {
   local: { webUrl: 'http://localhost:5173', apiUrl: 'http://127.0.0.1:3001' },
   dev: { webUrl: 'https://web-dev-467e.up.railway.app', apiUrl: 'https://api-dev-12f8.up.railway.app' },
-  // Las URLs de prod se completan cuando exista el entorno; mientras, se pasan por variables.
-  prod: { webUrl: '', apiUrl: '' },
+  prod: { webUrl: 'https://web-production-1e8d7.up.railway.app', apiUrl: 'https://api-production-82b3.up.railway.app' },
 };
 
 function resolveEnvironment(): Environment {

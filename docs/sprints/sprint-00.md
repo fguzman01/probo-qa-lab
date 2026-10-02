@@ -14,11 +14,11 @@ Dejar el proyecto, los entornos y el pipeline base listos para empezar el Sprint
 
 ### Entornos y pipeline
 - [x] Crear proyecto en Railway con entornos dev y prod (con base de datos cada uno) — proyecto `probo`
-- [ ] App "hola mundo" (front + API) desplegada en dev y prod
-- [ ] Estructura de tests (`core/`, `flows/`, `spec/`, `bdd/`) con un test dummy spec (UI y API) y un feature dummy BDD cuyo step llame a un flow
-- [ ] `ci.yml` y `deploy.yml` funcionando de punta a punta
-- [ ] Allure publicándose en GitHub Pages
-- [ ] Aprobación manual antes de prod configurada (environment `production` en GitHub ya creado con Felipe como aprobador; falta usarlo en `deploy.yml`)
+- [x] App "hola mundo" (front + API) desplegada en dev y prod (#7)
+- [x] Estructura de tests (`core/`, `flows/`, `spec/`, `bdd/`) con un test dummy spec (UI y API) y un feature dummy BDD cuyo step llame a un flow
+- [x] `ci.yml` y `deploy.yml` funcionando de punta a punta (#11)
+- [x] Allure publicándose en GitHub Pages ([reporte](https://fguzman01.github.io/probo-qa-lab/))
+- [x] Aprobación manual antes de prod configurada (environment `production`)
 
 ### Producto
 - [x] Definir épicas del MVP (issues #1-#6)
@@ -33,6 +33,15 @@ Dejar el proyecto, los entornos y el pipeline base listos para empezar el Sprint
 - **IA sin costo:** `AI_PROVIDER=fake|groq|claude`. Tests con `fake`, MVP con `groq` (free tier), `claude` solo en etapa producto con la key del cliente.
 - **Datos de prueba:** usuarios por seed; datos de negocio creados y eliminados por cada test vía API.
 - **Railway:** se usa la cuenta existente (USD 20/mes). Monitorear consumo la primera semana.
+
+## Notas del día a día
+- **2026-10-02:** el primer deploy a prod falló con 404 porque `api`/`web` no existían en el entorno production (la CLI no puede instanciarlos). Se resolvió con **Sync** desde dev en la web de Railway, ajustando luego `APP_ENV=prod`, dominios y variables. Re-run aprobado: deploy prod + smoke OK.
+
+## Entornos
+| | Web | API |
+|---|---|---|
+| dev | https://web-dev-467e.up.railway.app | https://api-dev-12f8.up.railway.app |
+| prod | https://web-production-1e8d7.up.railway.app | https://api-production-82b3.up.railway.app |
 
 ## Retro
 - Qué funcionó:
