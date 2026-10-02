@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+/* Tokens del sistema de diseño (Probo UI). */
+@theme {
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --color-primary: #3b2fc9;
+  --color-primary-hover: #2a2096;
+  --color-primary-soft: #eeebfc;
+  --color-ink: #14161b;
+  --color-muted: #5a6170;
+  --color-border: #dde1e7;
+  --color-border-strong: #c9ced6;
+  --color-bg: #f6f7f9;
+  --color-surface: #ffffff;
+  --color-danger: #b42318;
+  --color-danger-soft: #fdecea;
+  --color-danger-ink: #8f1d14;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}

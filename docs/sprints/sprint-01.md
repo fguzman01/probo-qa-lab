@@ -43,6 +43,11 @@ Que Probo permita **entrar, cargar una historia y obtener casos de prueba genera
 6. HU-005 si sobra tiempo
 
 ## Notas del día a día
+- **2026-10-02 · HU-001 (desarrollo):** los tests unitarios encontraron 2 defectos antes del PR (no llegaron a dev):
+  - **Valor límite de expiración:** la librería JWT aceptaba el token en el segundo exacto de `exp` (8:00:00). RFC 7519 exige rechazarlo. Se agregó el chequeo explícito.
+  - **Validación duplicada:** un email vacío devolvía dos errores para el mismo campo ("Campo obligatorio" y "Email inválido"). Ahora se devuelve uno por campo.
+  - Lección para `disenador-casos`: en sesiones/tokens, probar **siempre** el instante exacto del límite, no solo antes y después.
+- **2026-10-02:** la página de estado del sistema pasó de `/` a `/estado` (pública); `/` redirige al login o a `/historias`.
 
 ## Resultados de pruebas (link a Allure)
 
