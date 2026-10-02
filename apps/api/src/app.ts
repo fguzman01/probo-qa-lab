@@ -1,6 +1,6 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
-import type { DbCheck } from './db.js';
+import type { DbCheck } from './db/health.js';
 
 export type AppDeps = {
   appEnv: string;

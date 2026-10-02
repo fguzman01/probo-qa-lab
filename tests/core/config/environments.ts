@@ -7,7 +7,7 @@ export type Environment = {
 };
 
 const environments: Record<EnvName, Omit<Environment, 'name'>> = {
-  local: { webUrl: 'http://localhost:5173', apiUrl: 'http://127.0.0.1:3001' },
+  local: { webUrl: 'http://localhost:5173', apiUrl: 'http://127.0.0.1:4100' },
   dev: { webUrl: 'https://web-dev-467e.up.railway.app', apiUrl: 'https://api-dev-12f8.up.railway.app' },
   prod: { webUrl: 'https://web-production-1e8d7.up.railway.app', apiUrl: 'https://api-production-82b3.up.railway.app' },
 };

@@ -11,3 +11,4 @@ playwright-report/
 .playwright-mcp/
 .features-gen/
 history.jsonl
+apps/api/src/generated/

@@ -1,0 +1,15 @@
+# Postgres para desarrollo local. Puerto 5433 para no chocar con otros Postgres de la máquina.
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: probo
+      POSTGRES_PASSWORD: probo
+      POSTGRES_DB: probo
+    ports:
+      - "5433:5432"
+    volumes:
+      - probo-db:/var/lib/postgresql/data
+
+volumes:
+  probo-db:
