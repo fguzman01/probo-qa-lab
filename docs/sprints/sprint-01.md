@@ -1,6 +1,6 @@
 # Sprint 1
 
-> Estado: **borrador de planning** (pendiente de aprobación de Felipe)
+> Estado: **planning aprobado** por Felipe (2026-10-02). HUs pendientes de diseño técnico para pasar a Ready.
 
 ## Objetivo
 Que Probo permita **entrar, cargar una historia y obtener casos de prueba generados por IA listos para curar**, para usarlo en el diseño de pruebas del sprint 2.
@@ -30,6 +30,9 @@ Que Probo permita **entrar, cargar una historia y obtener casos de prueba genera
 - Diseño del sistema: `docs/arquitectura/modelo-datos.md`, `api.md`, `ia.md`.
 - Prisma + migraciones + seed de usuarios por entorno.
 - Mecanismo de datos de prueba: crear y limpiar datos por API desde las fixtures.
+
+## Diseño UI
+[Probo UI](https://claude.ai/artifact/Pe7F1K5x7XrggbH8wmc8fJ): sistema de diseño + Login, Historias, Nueva historia y Detalle y casos.
 
 ## Orden sugerido
 1. Diseño del sistema + Prisma + seed
