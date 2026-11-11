@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Casos de prueba</title>
+<!--
+  Plantilla de la skill disenar-casos. NO editar por HU:
+  el agente copia este archivo y reemplaza solo el JSON de <script id="casos">.
+  La fuente de verdad es docs/testing/casos/HU-XXX.md.
+-->
+<style>
+:root {
+  --bg: #F6F7F9; --surface: #FFFFFF; --ink: #14161B; --muted: #5A6170; --line: #DDE1E7;
+  --accent: #3B2FC9; --accent-soft: #ECEAFB;
+  --high: #B42318; --high-soft: #FDECEA; --medium: #9A5B00; --medium-soft: #FFF3DC; --low: #2F6B3B; --low-soft: #E6F4E9;
+  --ok: #2F6B3B; --ok-soft: #E6F4E9; --bad: #B42318; --bad-soft: #FDECEA; --warn: #9A5B00; --warn-soft: #FFF3DC;
+  --code-bg: #F0F2F5;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111318; --surface: #1A1D24; --ink: #E8EAEE; --muted: #A2A8B4; --line: #2E333D;
+    --accent: #9C94FF; --accent-soft: #26244A;
+    --high: #FF8A7A; --high-soft: #3A1E1C; --medium: #F5B95A; --medium-soft: #3A2C14; --low: #7CCB8C; --low-soft: #1B3322;
+    --ok: #7CCB8C; --ok-soft: #1B3322; --bad: #FF8A7A; --bad-soft: #3A1E1C; --warn: #F5B95A; --warn-soft: #3A2C14;
+    --code-bg: #14171D;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111318; --surface: #1A1D24; --ink: #E8EAEE; --muted: #A2A8B4; --line: #2E333D;
+  --accent: #9C94FF; --accent-soft: #26244A;
+  --high: #FF8A7A; --high-soft: #3A1E1C; --medium: #F5B95A; --medium-soft: #3A2C14; --low: #7CCB8C; --low-soft: #1B3322;
+  --ok: #7CCB8C; --ok-soft: #1B3322; --bad: #FF8A7A; --bad-soft: #3A1E1C; --warn: #F5B95A; --warn-soft: #3A2C14;
+  --code-bg: #14171D;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+code, pre, .mono { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
+header { background: var(--surface); border-bottom: 1px solid var(--line); }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+.head { padding: 20px 0 0; }
+.head h1 { margin: 0; font-size: 24px; letter-spacing: -0.01em; }
+.head p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+.tabs { display: flex; gap: 4px; margin-top: 16px; overflow-x: auto; }
+.tabs button { flex: none; border: 0; background: none; color: var(--muted); font: inherit; font-weight: 600; padding: 10px 14px; border-bottom: 2px solid transparent; cursor: pointer; }
+.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+main { padding: 24px 0 64px; }
+section[hidden] { display: none; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+.grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+.stat .n { font-size: 28px; font-weight: 700; }
+.stat .l { color: var(--muted); font-size: 13px; }
+.stack { display: flex; flex-direction: column; gap: 16px; }
+.table-box { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; font-size: 13px; white-space: nowrap; }
+tr.clickable { cursor: pointer; }
+tr.clickable:hover td { background: var(--accent-soft); }
+.pill { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; background: var(--code-bg); color: var(--muted); }
+.p-HIGH { background: var(--high-soft); color: var(--high); }
+.p-MEDIUM { background: var(--medium-soft); color: var(--medium); }
+.p-LOW { background: var(--low-soft); color: var(--low); }
+.s-Aprobado { background: var(--ok-soft); color: var(--ok); }
+.s-Descartado { background: var(--bad-soft); color: var(--bad); text-decoration: line-through; }
+.s-Cambiar { background: var(--warn-soft); color: var(--warn); }
+.s-Propuesto { background: var(--accent-soft); color: var(--accent); }
+.filters { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; margin-bottom: 16px; }
+.filters label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); font-weight: 600; }
+.filters select, .filters input { height: 38px; padding: 0 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); font: inherit; min-width: 140px; }
+.count { color: var(--muted); font-size: 14px; margin-left: auto; align-self: center; }
+.case h3 { margin: 0; font-size: 17px; }
+.case .id { color: var(--muted); font-size: 13px; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 4px; }
+.case h4 { margin: 14px 0 4px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.case ol, .case ul { margin: 0; padding-left: 20px; }
+.case p { margin: 0; }
+.case.descartado { opacity: 0.6; }
+.matrix td.hit { text-align: center; color: var(--accent); font-weight: 700; }
+.matrix td.miss { background: var(--bad-soft); color: var(--bad); font-weight: 600; }
+td.miss-cell { color: var(--bad); font-weight: 600; }
+.matrix th.case-col { writing-mode: vertical-rl; transform: rotate(180deg); padding: 10px 4px; }
+pre.gherkin { margin: 0; padding: 16px; background: var(--code-bg); border-radius: 8px; overflow-x: auto; font-size: 13px; line-height: 1.6; }
+.kw { color: var(--accent); font-weight: 700; }
+.tag { color: var(--medium); }
+.str { color: var(--low); }
+.cmt { color: var(--muted); font-style: italic; }
+.empty { color: var(--muted); }
+.alert { padding: 12px 14px; border-radius: 8px; background: var(--bad-soft); color: var(--bad); font-weight: 600; }
+h2 { font-size: 18px; margin: 0 0 12px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap head">
+    <h1 id="title">Casos de prueba</h1>
+    <p id="subtitle"></p>
+    <nav class="tabs" role="tablist" aria-label="Secciones">
+      <button role="tab" aria-selected="true" aria-controls="tab-resumen" id="b-resumen">Resumen</button>
+      <button role="tab" aria-selected="false" aria-controls="tab-trazabilidad" id="b-trazabilidad">Trazabilidad</button>
+      <button role="tab" aria-selected="false" aria-controls="tab-casos" id="b-casos">Casos</button>
+      <button role="tab" aria-selected="false" aria-controls="tab-gherkin" id="b-gherkin">Gherkin</button>
+      <button role="tab" aria-selected="false" aria-controls="tab-fuera" id="b-fuera">Fuera de alcance</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="tab-resumen" role="tabpanel" aria-labelledby="b-resumen" class="stack"></section>
+  <section id="tab-trazabilidad" role="tabpanel" aria-labelledby="b-trazabilidad" class="stack" hidden></section>
+  <section id="tab-casos" role="tabpanel" aria-labelledby="b-casos" hidden>
+    <div class="filters">
+      <label>Nivel<select id="f-level"></select></label>
+      <label>Prioridad<select id="f-priority"></select></label>
+      <label>Estado<select id="f-status"></select></label>
+      <label>Criterio<select id="f-ca"></select></label>
+      <label>Buscar<input id="f-text" type="search" placeholder="ID o título"></label>
+      <span class="count" id="f-count"></span>
+    </div>
+    <div class="stack" id="case-list"></div>
+  </section>
+  <section id="tab-gherkin" role="tabpanel" aria-labelledby="b-gherkin" class="stack" hidden></section>
+  <section id="tab-fuera" role="tabpanel" aria-labelledby="b-fuera" class="stack" hidden></section>
+</main>
+
+<script type="application/json" id="casos">
+{
+  "hu": { "code": "HU-000", "title": "Ejemplo de la plantilla", "generated": "2026-11-11", "status": "Pendiente de curación", "sources": "Datos de ejemplo: el agente reemplaza este bloque." },
+  "criteria": [
+    { "code": "CA1", "text": "Con datos válidos, la historia se crea", "level": "UI" },
+    { "code": "CA2", "text": "El título tiene máximo 120 caracteres", "level": "UI" },
+    { "code": "CA3", "text": "POST válido responde 201", "level": "API" }
+  ],
+  "cases": [
+    {
+      "id": "HU000-TC01", "title": "Crear una historia válida", "level": "UI", "technique": "HAPPY_PATH", "priority": "HIGH",
+      "covers": ["CA1"], "automation": "bdd", "status": "Propuesto", "origin": "CA1",
+      "preconditions": "Sesión iniciada como QA.", "data": null,
+      "steps": ["Abrir Nueva historia", "Completar todos los campos", "Guardar la historia"],
+      "expected": ["Redirige al detalle", "Se ve el código asignado"]
+    },
+    {
+      "id": "HU000-TC02", "title": "Largo máximo del título", "level": "API", "technique": "BOUNDARY_VALUE", "priority": "MEDIUM",
+      "covers": ["CA2"], "automation": "spec", "status": "Aprobado", "origin": "CA2",
+      "preconditions": "Token válido.",
+      "data": { "columns": ["largo", "resultado esperado"], "rows": [["119", "201"], ["120", "201"], ["121", "400 · Máximo 120 caracteres"]] },
+      "steps": ["Enviar POST /api/stories con el título del largo indicado"],
+      "expected": ["Responde lo indicado en la tabla"]
+    }
+  ],
+  "gherkin": [
+    { "name": "UI", "content": "# language: es\n@ui @HU-000\nCaracterística: Ejemplo\n\n  @HU000-TC01 @CA1\n  Escenario: Crear una historia válida\n    Dado que inicié sesión como QA\n    Cuando creo una historia con datos válidos\n    Entonces veo el detalle con \"HU-\" y su número" }
+  ],
+  "outOfScope": [{ "item": "Búsqueda de historias", "reason": "Fuera del MVP (HU-004)" }],
+  "doubts": []
+}
+</script>
+
+<script>
+(function () {
+  const TECH = { HAPPY_PATH: 'Happy path', EQUIVALENCE_PARTITION: 'Partición', BOUNDARY_VALUE: 'Valor límite', DECISION_TABLE: 'Tabla de decisión', NEGATIVE: 'Negativo', OTHER: 'Otra' };
+  const PRIO = { HIGH: 'Alta', MEDIUM: 'Media', LOW: 'Baja' };
+  const STATUSES = ['Propuesto', 'Aprobado', 'Cambiar', 'Descartado'];
+
+  let data;
+  try {
+    data = JSON.parse(document.getElementById('casos').textContent);
+  } catch (e) {
+    document.querySelector('main').innerHTML = '';
+    const a = el('div', 'alert', 'El JSON de casos es inválido: ' + e.message);
+    document.querySelector('main').appendChild(a);
+    return;
+  }
+  const cases = data.cases || [];
+  const criteria = data.criteria || [];
+
+  function el(tag, cls, text) {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text !== undefined && text !== null) n.textContent = text;
+    return n;
+  }
+  function pill(text, cls) { return el('span', 'pill ' + (cls || ''), text); }
+  function table(columns, rows, opts) {
+    const box = el('div', 'table-box');
+    const t = el('table', opts && opts.cls);
+    const thead = el('thead'); const hr = el('tr');
+    columns.forEach(c => hr.appendChild(el('th', null, c)));
+    thead.appendChild(hr); t.appendChild(thead);
+    const tb = el('tbody');
+    rows.forEach(r => {
+      const tr = el('tr');
+      r.forEach(v => { const td = el('td'); if (v instanceof Node) td.appendChild(v); else td.textContent = v; tr.appendChild(td); });
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb); box.appendChild(t);
+    return { box, tbody: tb };
+  }
+  function countBy(key) {
+    const m = {};
+    cases.forEach(c => { m[c[key]] = (m[c[key]] || 0) + 1; });
+    return m;
+  }
+
+  // Encabezado
+  const hu = data.hu || {};
+  document.title = (hu.code ? hu.code + ' · ' : '') + 'Casos de prueba';
+  document.getElementById('title').textContent = 'Casos ' + (hu.code || '') + ': ' + (hu.title || '');
+  document.getElementById('subtitle').textContent = ['Generado por disenador-casos', hu.generated, hu.status, hu.sources].filter(Boolean).join(' · ');
+
+  // Pestañas
+  const tabs = [...document.querySelectorAll('[role="tab"]')];
+  function showTab(btn) {
+    tabs.forEach(b => {
+      const on = b === btn;
+      b.setAttribute('aria-selected', on);
+      document.getElementById(b.getAttribute('aria-controls')).hidden = !on;
+    });
+    try { location.hash = btn.id.slice(2); } catch (e) { /* sin hash */ }
+  }
+  tabs.forEach(b => b.addEventListener('click', () => showTab(b)));
+  function fromHash() { const t = tabs.find(b => '#' + b.id.slice(2) === location.hash); if (t) showTab(t); }
+  window.addEventListener('hashchange', fromHash);
+  fromHash();
+
+  // Resumen
+  const coveredBy = {};
+  criteria.forEach(c => { coveredBy[c.code] = cases.filter(k => (k.covers || []).includes(c.code) && k.status !== 'Descartado'); });
+  const uncovered = criteria.filter(c => coveredBy[c.code].length === 0);
+  const resumen = document.getElementById('tab-resumen');
+  if (uncovered.length) resumen.appendChild(el('div', 'alert', 'Criterios sin cobertura: ' + uncovered.map(c => c.code).join(', ')));
+  const grid = el('div', 'grid');
+  const lv = countBy('level'), pr = countBy('priority'), st = countBy('status');
+  [
+    [cases.length, 'casos'],
+    [criteria.length - uncovered.length + ' / ' + criteria.length, 'criterios cubiertos'],
+    [(lv.UI || 0) + ' / ' + (lv.API || 0), 'UI / API'],
+    [(pr.HIGH || 0) + ' · ' + (pr.MEDIUM || 0) + ' · ' + (pr.LOW || 0), 'prioridad alta · media · baja'],
+    [(st.Aprobado || 0) + ' / ' + cases.length, 'aprobados'],
+  ].forEach(([n, l]) => { const c = el('div', 'card stat'); c.appendChild(el('div', 'n', String(n))); c.appendChild(el('div', 'l', l)); grid.appendChild(c); });
+  resumen.appendChild(grid);
+  const sumCard = el('div', 'card');
+  sumCard.appendChild(el('h2', null, 'Todos los casos'));
+  const sum = table(['ID', 'Título', 'Nivel', 'Técnica', 'Prioridad', 'Cubre', 'Automatización', 'Estado'], []);
+  cases.forEach(c => {
+    const tr = el('tr', 'clickable');
+    [el('span', 'mono', c.id), c.title, c.level, TECH[c.technique] || c.technique, pill(PRIO[c.priority] || c.priority, 'p-' + c.priority), (c.covers || []).join(', '), c.automation, pill(c.status, 's-' + c.status)]
+      .forEach(v => { const td = el('td'); if (v instanceof Node) td.appendChild(v); else td.textContent = v; tr.appendChild(td); });
+    tr.addEventListener('click', () => { showTab(document.getElementById('b-casos')); const t = document.getElementById('case-' + c.id); if (t) t.scrollIntoView({ behavior: 'smooth' }); });
+    sum.tbody.appendChild(tr);
+  });
+  sumCard.appendChild(sum.box);
+  resumen.appendChild(sumCard);
+  if ((data.doubts || []).length) {
+    const d = el('div', 'card'); d.appendChild(el('h2', null, 'Dudas'));
+    const ul = el('ul'); data.doubts.forEach(x => ul.appendChild(el('li', null, x))); d.appendChild(ul);
+    resumen.appendChild(d);
+  }
+
+  // Trazabilidad
+  const traz = document.getElementById('tab-trazabilidad');
+  const tc = el('div', 'card');
+  tc.appendChild(el('h2', null, 'Criterio → casos'));
+  const listT = table(['Criterio', 'Texto', 'Nivel', 'Casos'], criteria.map(c => [c.code, c.text, c.level, coveredBy[c.code].map(k => k.id).join(', ') || '—']));
+  [...listT.tbody.rows].forEach((r, i) => { if (!coveredBy[criteria[i].code].length) r.cells[3].className = 'miss-cell'; });
+  tc.appendChild(listT.box);
+  traz.appendChild(tc);
+  const mc = el('div', 'card');
+  mc.appendChild(el('h2', null, 'Matriz'));
+  const mbox = el('div', 'table-box');
+  const mt = el('table', 'matrix');
+  const mh = el('tr'); mh.appendChild(el('th', null, 'Criterio'));
+  cases.forEach(c => mh.appendChild(el('th', 'case-col mono', c.id)));
+  const mthead = el('thead'); mthead.appendChild(mh); mt.appendChild(mthead);
+  const mb = el('tbody');
+  criteria.forEach(cr => {
+    const tr = el('tr'); tr.appendChild(el('td', 'mono', cr.code));
+    const any = coveredBy[cr.code].length > 0;
+    cases.forEach(c => {
+      const hit = (c.covers || []).includes(cr.code);
+      tr.appendChild(el('td', hit ? 'hit' : (any ? '' : 'miss'), hit ? '●' : ''));
+    });
+    mb.appendChild(tr);
+  });
+  mt.appendChild(mb); mbox.appendChild(mt); mc.appendChild(mbox);
+  traz.appendChild(mc);
+
+  // Casos
+  const fLevel = document.getElementById('f-level'), fPrio = document.getElementById('f-priority'),
+        fStatus = document.getElementById('f-status'), fCa = document.getElementById('f-ca'), fText = document.getElementById('f-text');
+  function options(sel, values, labels) {
+    sel.appendChild(new Option('Todos', ''));
+    values.forEach(v => sel.appendChild(new Option(labels ? (labels[v] || v) : v, v)));
+  }
+  options(fLevel, [...new Set(cases.map(c => c.level))]);
+  options(fPrio, ['HIGH', 'MEDIUM', 'LOW'], PRIO);
+  options(fStatus, STATUSES);
+  options(fCa, criteria.map(c => c.code));
+
+  const list = document.getElementById('case-list');
+  const cards = cases.map(c => {
+    const card = el('article', 'card case' + (c.status === 'Descartado' ? ' descartado' : ''));
+    card.id = 'case-' + c.id;
+    card.appendChild(el('div', 'id mono', c.id));
+    card.appendChild(el('h3', null, c.title));
+    const meta = el('div', 'meta');
+    [pill(c.level), pill(TECH[c.technique] || c.technique), pill(PRIO[c.priority] || c.priority, 'p-' + c.priority), pill('Cubre ' + (c.covers || []).join(', ')), pill(c.automation), pill(c.status, 's-' + c.status)].forEach(p => meta.appendChild(p));
+    card.appendChild(meta);
+    if (c.origin) { card.appendChild(el('h4', null, 'Origen')); card.appendChild(el('p', null, c.origin)); }
+    if (c.preconditions) { card.appendChild(el('h4', null, 'Precondiciones')); card.appendChild(el('p', null, c.preconditions)); }
+    if (c.data && c.data.columns) { card.appendChild(el('h4', null, 'Datos')); card.appendChild(table(c.data.columns, c.data.rows || []).box); }
+    if ((c.steps || []).length) { card.appendChild(el('h4', null, 'Pasos')); const ol = el('ol'); c.steps.forEach(s => ol.appendChild(el('li', null, s))); card.appendChild(ol); }
+    if ((c.expected || []).length) { card.appendChild(el('h4', null, 'Resultado esperado')); const ul = el('ul'); c.expected.forEach(s => ul.appendChild(el('li', null, s))); card.appendChild(ul); }
+    list.appendChild(card);
+    return { c, card };
+  });
+  function filter() {
+    const q = fText.value.trim().toLowerCase();
+    let n = 0;
+    cards.forEach(({ c, card }) => {
+      const ok = (!fLevel.value || c.level === fLevel.value) && (!fPrio.value || c.priority === fPrio.value) &&
+        (!fStatus.value || c.status === fStatus.value) && (!fCa.value || (c.covers || []).includes(fCa.value)) &&
+        (!q || (c.id + ' ' + c.title).toLowerCase().includes(q));
+      card.hidden = !ok; if (ok) n++;
+    });
+    document.getElementById('f-count').textContent = n + ' de ' + cases.length + ' casos';
+  }
+  [fLevel, fPrio, fStatus, fCa].forEach(s => s.addEventListener('change', filter));
+  fText.addEventListener('input', filter);
+  filter();
+
+  // Gherkin
+  const KW = /^(\s*)(Característica|Antecedentes|Escenario|Esquema del escenario|Ejemplos|Dado|Cuando|Entonces|Y|Pero)(:?)(?=\s|$)/;
+  function highlight(line) {
+    const frag = document.createDocumentFragment();
+    if (/^\s*#/.test(line)) { frag.appendChild(el('span', 'cmt', line)); return frag; }
+    if (/^\s*@/.test(line)) { frag.appendChild(el('span', 'tag', line)); return frag; }
+    let rest = line;
+    const m = rest.match(KW);
+    if (m) { frag.appendChild(document.createTextNode(m[1])); frag.appendChild(el('span', 'kw', m[2] + m[3])); rest = rest.slice(m[0].length); }
+    rest.split(/("[^"]*")/).forEach(part => {
+      if (/^"[^"]*"$/.test(part)) frag.appendChild(el('span', 'str', part)); else frag.appendChild(document.createTextNode(part));
+    });
+    return frag;
+  }
+  const gh = document.getElementById('tab-gherkin');
+  if (!(data.gherkin || []).length) gh.appendChild(el('p', 'empty', 'Sin Gherkin.'));
+  (data.gherkin || []).forEach(g => {
+    const card = el('div', 'card');
+    card.appendChild(el('h2', null, g.name));
+    const pre = el('pre', 'gherkin');
+    (g.content || '').split('\n').forEach((line, i, arr) => { pre.appendChild(highlight(line)); if (i < arr.length - 1) pre.appendChild(document.createTextNode('\n')); });
+    card.appendChild(pre);
+    gh.appendChild(card);
+  });
+
+  // Fuera de alcance
+  const fuera = document.getElementById('tab-fuera');
+  const fc = el('div', 'card');
+  if ((data.outOfScope || []).length) fc.appendChild(table(['Qué', 'Motivo'], data.outOfScope.map(o => [o.item, o.reason])).box);
+  else fc.appendChild(el('p', 'empty', 'Sin hallazgos.'));
+  fuera.appendChild(fc);
+})();
+</script>
+</body>
+</html>
