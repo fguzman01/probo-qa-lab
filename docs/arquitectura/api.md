@@ -56,8 +56,10 @@
 
 - **Historia completa:** `{ id, code, title, asA, iWant, soThat, criteria: [{ id, code, position, text }], createdAt, updatedAt }`.
 - **`casesCount`:** casos **no descartados**.
-- **Validaciones:** `title` 1–120 · `asA` 1–200 · `iWant` y `soThat` 1–500 · `criteria` 1–30 ítems, cada `text` 1–500. Se aplica `trim`: un texto de solo espacios cuenta como vacío.
-- **`DELETE`** no tiene UI en el MVP; existe para limpiar datos de prueba (y para el futuro).
+- **Validaciones:** `title` 1–120 · `asA` 1–200 · `iWant` y `soThat` 1–500 · `criteria` 1–30 ítems, cada `text` 1–500. Se aplica `trim`: un texto de solo espacios cuenta como vacío y los textos se guardan recortados. El largo se cuenta en caracteres (code points), igual que Postgres.
+- **Errores de criterios:** `details[].field` = `criteria.<índice>.text` (índice desde 0, en el orden enviado); la cantidad, `criteria`. Un solo error por campo.
+- **Campos extra** del body (`code`, `number`, `ownerId`, `position`…) se ignoran: `ownerId` sale del token y `position` del orden del array.
+- **`DELETE`** no tiene UI en el MVP; existe para limpiar datos de prueba (y para el futuro). Se entrega con HU-003.
 
 ### Casos (HU-006, HU-007)
 | Método | Ruta | Body | Respuesta |

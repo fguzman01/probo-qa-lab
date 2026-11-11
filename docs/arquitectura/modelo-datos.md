@@ -31,7 +31,7 @@ Se crean **solo por seed** (no hay registro en el MVP): `qa@probo.dev` en dev (t
 |---|---|---|
 | id | uuid | PK |
 | number | int | autoincremental, único |
-| code | — | **calculado**: `HU-` + `number` con 3 dígitos (`HU-001`). No se guarda ni se edita |
+| code | — | **calculado**: `HU-` + `number` con al menos 3 dígitos (`HU-001`, `HU-1000`). No se guarda ni se edita |
 | title | string | obligatorio, máx. 120 |
 | asA | string | "Como", obligatorio, máx. 200 |
 | iWant | string | "Quiero", obligatorio, máx. 500 |
