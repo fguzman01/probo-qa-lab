@@ -24,7 +24,7 @@ El historial es clave: un agente que sabe dónde hubo bugs antes, prioriza mejor
 | Agente | Qué hace | Skills |
 |---|---|---|
 | `qa-analista` | Lee HU + diseño + historial. Detecta ambigüedades, riesgos y zonas con bugs previos. Prepara preguntas para el PO. | `analizar-hu` |
-| `disenador-casos` | Genera casos robustos (particiones, valores límite, tablas de decisión, negativos), priorizados por riesgo. Escribe los escenarios en **Gherkin como documentación** en todas las HUs, aunque se automaticen en spec. | `disenar-casos`, `escribir-gherkin` |
+| `disenador-casos` | Genera casos robustos (particiones, valores límite, tablas de decisión, negativos), priorizados por riesgo y trazables a los criterios. Escribe los escenarios en **Gherkin como documentación** en todas las HUs, aunque se automaticen en spec. Salida: `docs/testing/casos/HU-XXX.md` (fuente de verdad, se cura en la PR) + `HU-XXX.html` (vista con pestañas, generada desde el md). | `disenar-casos`, `escribir-gherkin` |
 | `automatizador` | Convierte casos aprobados en tests UI/API. Por defecto en la suite spec (pages → flows → tests); para las HUs marcadas como BDD, crea features y steps que **reutilizan los flows**. Respeta POM y data providers. | `crear-page-object`, `crear-flow`, `crear-test-spec`, `crear-test-api`, `crear-test-bdd` |
 | `analista-resultados` | Lee resultados de CI y Allure, clasifica fallas (bug real / flaky / ambiente) y redacta bugs. | `analizar-fallas`, `reportar-bug` |
 
